@@ -1,0 +1,13 @@
+# Dependencias de Node
+node_modules/
+
+# Archivos de configuración locales
+# Esto es para si en el futuro usas un archivo para tus variables de entorno (.env)
+.env
+
+# Archivos de log
+*.log
+
+# Otros archivos
+dist/
+build/
