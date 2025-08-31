@@ -262,7 +262,6 @@
                     logoutButton.addEventListener('click', function(e) {
                         e.preventDefault();
                         localStorage.removeItem('token');
-                        console.log('se cerro la sesion');
                         window.location.href = 'index.html'; // O tu página de login
                     });
                 }
