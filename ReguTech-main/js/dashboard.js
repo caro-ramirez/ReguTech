@@ -9,20 +9,36 @@
   if (!token) {
     console.log('No hay token. Redirigiendo a login...');
     window.location.href = 'index.html'; 
-    return;
+    return; // Detiene la ejecución del script
   }
 
   console.log('Usuario logueado. Rol:', userRol);
 
-  // --- 2. LÓGICA DE VISTAS POR ROL ---
+  // --- 2. LÓGICA DE VISTAS POR ROL (CAMBIO IMPORTANTE) ---
+  const colaboradorView = document.getElementById('colaborador-view');
   const adminView = document.getElementById('admin-view');
   const superAdminView = document.getElementById('super-admin-view');
 
-  if (userRol === 'Administrador') {
-    if (adminView) adminView.style.display = 'block';
-  } else if (userRol === 'SuperAdmin') {
-    if (adminView) adminView.style.display = 'block'; 
+  if (userRol === 'SuperAdmin') {
+    // Si es SuperAdmin (Soporte), solo muestra el panel de SuperAdmin.
     if (superAdminView) superAdminView.style.display = 'block';
+  
+  } else if (userRol === 'Administrador') {
+    // Si es Admin de Cliente, muestra TAREAS y panel de ADMIN.
+    if (colaboradorView) colaboradorView.style.display = 'block';
+    if (adminView) adminView.style.display = 'block';
+    
+    // Carga las tareas pendientes
+    cargarPoliticas(token);
+    cargarChecklists(token);
+
+  } else if (userRol === 'Colaborador') {
+    // Si es Colaborador, solo muestra TAREAS.
+    if (colaboradorView) colaboradorView.style.display = 'block';
+
+    // Carga las tareas pendientes
+    cargarPoliticas(token);
+    cargarChecklists(token);
   }
   
   // --- 3. LÓGICA DE CERRAR SESIÓN ---
@@ -42,10 +58,9 @@
   // (Este código se movió dentro de 'DOMContentLoaded' para asegurar que todo cargue)
 
   
-  // --- 5. CARGA DE DATOS DINÁMICOS ---
-  // Llama a las funciones para cargar las tareas del usuario
-  cargarPoliticas(token);
-  cargarChecklists(token);
+  // --- 5. CARGA DE DATOS DINÁMICOS (MOVIDA) ---
+  // Las llamadas (cargarPoliticas, cargarChecklists) se movieron
+  // dentro de la lógica de roles (paso 2)
 
 
   // --- INICIO DE BLOQUE DE GRÁFICOS ---
@@ -60,7 +75,7 @@
             danger: getComputedStyle(root).getPropertyValue('--color-danger') || '#e76f51'
         };
 
-        // Gráfico de Cumplimiento (para todos)
+        // Gráfico de Cumplimiento (para Colaborador/Admin)
         const complianceCtx = document.getElementById('complianceChart')?.getContext('2d');
         if (complianceCtx) {
             new Chart(complianceCtx, {
@@ -132,13 +147,8 @@
 })(); // Fin de la función IIFE
 
 
-// --- NUEVAS FUNCIONES PARA CARGAR DATOS ---
+// --- FUNCIONES PARA CARGAR DATOS (Sin cambios) ---
 
-/**
- * Llama a la API para obtener las políticas y las muestra en la lista.
- * TODO: Esta API trae TODAS. Necesitamos una API que traiga solo las PENDIENTES del usuario.
- * Por ahora, mostramos todas como ejemplo.
- */
 async function cargarPoliticas(token) {
   const listaUl = document.getElementById('lista-politicas-pendientes');
   if (!listaUl) return;
@@ -146,70 +156,51 @@ async function cargarPoliticas(token) {
   try {
     const response = await fetch('http://localhost:3000/api/policies', {
       method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}` // ¡Enviamos el token!
-      }
+      headers: { 'Authorization': `Bearer ${token}` }
     });
-
     if (!response.ok) {
       if (response.status === 401 || response.status === 403) {
          localStorage.clear();
-         window.location.href = 'index.html'; // Token expirado o inválido
+         window.location.href = 'index.html'; 
       }
       throw new Error('Error al cargar políticas');
     }
-
     const politicas = await response.json();
-    
-    listaUl.innerHTML = ''; // Limpiamos la lista
+    listaUl.innerHTML = ''; 
     if (politicas.length === 0) {
-        listaUl.innerHTML = '<li class="list-group-item">¡No hay políticas para mostrar!</li>';
+        listaUl.innerHTML = '<li class="list-group-item">¡No hay políticas pendientes!</li>';
         return;
     }
-
     politicas.forEach(politica => {
       const li = document.createElement('li');
       li.className = 'list-group-item d-flex justify-content-between align-items-center';
       li.innerHTML = `
         <span>${politica.nombre} (v${politica.version})</span>
-        <a href="policy-detail.html?id=${politica.id_politica}" class="btn btn-sm btn-primary-custom">Ver y Confirmar</a>
+        <a href="policy-view.html?id=${politica.id_politica}" class="btn btn-sm btn-primary-custom">Ver y Confirmar</a>
       `;
       listaUl.appendChild(li);
     });
-
   } catch (err) {
     console.error('Error de red al cargar políticas:', err);
     listaUl.innerHTML = '<li class="list-group-item text-danger">Error al cargar políticas.</li>';
   }
 }
 
-/**
- * Llama a la API para obtener los checklists y los muestra en la lista.
- * TODO: Esta API trae TODOS. Necesitamos una API que traiga solo los PENDIENTES.
- */
 async function cargarChecklists(token) {
   const listaUl = document.getElementById('lista-checklists-pendientes');
   if (!listaUl) return;
-
   try {
-    // Asegúrate de que tu backend tenga la ruta 'GET /api/checklists'
     const response = await fetch('http://localhost:3000/api/checklists', {
       method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
+      headers: { 'Authorization': `Bearer ${token}` }
     });
-
     if (!response.ok) throw new Error('Error al cargar checklists');
-
     const checklists = await response.json();
-    
-    listaUl.innerHTML = ''; // Limpiamos la lista
+    listaUl.innerHTML = ''; 
     if (checklists.length === 0) {
-        listaUl.innerHTML = '<li class="list-group-item">¡No hay checklists para mostrar!</li>';
+        listaUl.innerHTML = '<li class="list-group-item">¡No hay checklists pendientes!</li>';
         return;
     }
-
     checklists.forEach(checklist => {
       const li = document.createElement('li');
       li.className = 'list-group-item d-flex justify-content-between align-items-center';
@@ -219,7 +210,6 @@ async function cargarChecklists(token) {
       `;
       listaUl.appendChild(li);
     });
-
   } catch (err) {
     console.error('Error de red al cargar checklists:', err);
     listaUl.innerHTML = '<li class="list-group-item text-danger">Error al cargar checklists.</li>';

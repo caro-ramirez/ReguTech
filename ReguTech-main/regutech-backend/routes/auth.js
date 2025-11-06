@@ -1,38 +1,64 @@
 // regutech-backend/routes/auth.js
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs'); // <-- ¡CAMBIO IMPORTANTE!
 const jwt = require('jsonwebtoken');
 const db = require('../db');
 const { v4: uuidv4 } = require('uuid');
 const { verifyToken } = require('../middleware/auth'); 
 
-// Clave secreta (debe estar en un .env)
 const JWT_SECRET = 'tu_secreto_super_seguro';
 
 // Ruta para el inicio de sesión
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
+
+  // --- DEBUG 1: VER LO QUE LLEGA ---
+  console.log(`\n[DEBUG] Intento de login para: ${email}`);
+  console.log(`[DEBUG] Contraseña recibida: ${password}`);
+
   try {
+    // 1. Buscar el usuario por email en la base de datos
     const result = await db.query('SELECT * FROM usuario WHERE email = $1', [email]);
     const usuario = result.rows[0];
+
     if (!usuario) {
+      // --- DEBUG 2: ERROR DE USUARIO ---
+      console.log('[DEBUG] Error: Usuario no encontrado en la BD.');
       return res.status(401).json({ message: 'Credenciales incorrectas.' });
     }
+
+    // --- DEBUG 3: VER LO QUE SE COMPARA ---
+    console.log(`[DEBUG] Hash de la BD: ${usuario.password_hash}`);
     const match = await bcrypt.compare(password, usuario.password_hash);
+    
+    // --- DEBUG 4: VER EL RESULTADO ---
+    console.log(`[DEBUG] Resultado de bcrypt.compare: ${match}`);
+
     if (!match) {
       return res.status(401).json({ message: 'Credenciales incorrectas.' });
     }
-    const payload = { id: usuario.id_usuario, rol: usuario.rol, id_cliente: usuario.id_cliente };
+    
+    // 3. Generar el token JWT (Payload)
+    const payload = { 
+      id: usuario.id_usuario, 
+      rol: usuario.rol, 
+      id_cliente: usuario.id_cliente 
+    };
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
+    
+    console.log('[DEBUG] ¡Éxito! Login correcto.');
     res.json({ message: 'Inicio de sesión exitoso.', token, rol: usuario.rol });
+
   } catch (err) {
     console.error('Error en la autenticación:', err);
     res.status(500).json({ message: 'Error interno del servidor.' });
   }
 });
 
-// Ruta para crear el primer admin y cliente (SuperAdmin)
+// ... (El resto de tus rutas: /create-admin-user, /me, /change-password, etc.)
+// (Asegúrate de que el resto de tu archivo auth.js esté aquí debajo)
+// Ruta para crear manualmente el primer usuario administrador y su cliente
 router.post('/create-admin-user', async (req, res) => {
   const { clientName, userName, email, password } = req.body;
   try {
@@ -58,7 +84,7 @@ router.post('/create-admin-user', async (req, res) => {
   }
 });
 
-// --- Rutas de Perfil de Usuario ---
+/* --- Rutas de Perfil de Usuario --- */
 router.get('/me', verifyToken, async (req, res) => {
   try {
     const userId = req.user.id;
@@ -105,12 +131,7 @@ router.put('/change-password', verifyToken, async (req, res) => {
   } catch (err) { console.error(err.message); res.status(500).send('Error del servidor'); }
 });
 
-
-/*
- * @route   POST /api/forgot-password
- * @desc    (NUEVO) Inicia el proceso de reseteo de contraseña
- * @access  Público
- */
+/* --- Rutas de Reseteo de Contraseña --- */
 router.post('/forgot-password', async (req, res) => {
   const { email } = req.body;
   try {
@@ -118,18 +139,12 @@ router.post('/forgot-password', async (req, res) => {
     const usuario = result.rows[0];
 
     if (!usuario) {
-      // No revelamos si el usuario existe o no por seguridad
       return res.json({ message: 'Si tu correo está registrado, recibirás un enlace.' });
     }
 
-    // Creamos un token de reseteo especial que expira en 15 minutos
     const payload = { id: usuario.id_usuario, type: 'reset' };
     const resetToken = jwt.sign(payload, JWT_SECRET, { expiresIn: '15m' });
 
-    // --- SIMULACIÓN DE ENVÍO DE EMAIL ---
-    // En una app real, aquí enviarías un email al 'email' del usuario
-    // con un enlace: `https://tu-sitio.com/reset-password.html?token=${resetToken}`
-    
     console.log('--- SIMULACIÓN DE RECUPERO DE CONTRASEÑA ---');
     console.log(`Usuario: ${email}`);
     console.log('Token (pegar en la URL):', resetToken);
@@ -143,20 +158,10 @@ router.post('/forgot-password', async (req, res) => {
   }
 });
 
-/*
- * @route   POST /api/reset-password
- * @desc    (NUEVO) Resetea la contraseña usando un token
- * @access  Público
- */
 router.post('/reset-password', async (req, res) => {
   const { token, newPassword } = req.body;
-
-  if (!token || !newPassword) {
-    return res.status(400).json({ msg: 'Faltan datos.' });
-  }
-
+  if (!token || !newPassword) return res.status(400).json({ msg: 'Faltan datos.' });
   try {
-    // 1. Verificar el token de reseteo
     let decoded;
     try {
       decoded = jwt.verify(token, JWT_SECRET);
@@ -164,22 +169,14 @@ router.post('/reset-password', async (req, res) => {
       return res.status(401).json({ msg: 'Token inválido o expirado.' });
     }
     
-    // Asegurarnos de que es un token de tipo 'reset'
-    if (decoded.type !== 'reset') {
-      return res.status(401).json({ msg: 'Token inválido.' });
-    }
+    if (decoded.type !== 'reset') return res.status(401).json({ msg: 'Token inválido.' });
     
     const userId = decoded.id;
-
-    // 2. Hashear la nueva contraseña
     const saltRounds = 10;
     const newPasswordHash = await bcrypt.hash(newPassword, saltRounds);
-
-    // 3. Actualizar la contraseña en la BD
+    
     await db.query('UPDATE USUARIO SET password_hash = $1 WHERE id_usuario = $2', [newPasswordHash, userId]);
-
     res.json({ msg: 'Contraseña actualizada con éxito. Ya puedes iniciar sesión.' });
-
   } catch (err) {
     console.error('Error en reset-password:', err);
     res.status(500).json({ message: 'Error interno del servidor.' });

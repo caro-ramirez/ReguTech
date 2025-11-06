@@ -8,41 +8,39 @@ const db = require('./db');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// --- Middleware ---
 app.use(cors()); 
 app.use(bodyParser.json()); 
+
+// --- ¡¡ESTA ES LA LÍNEA QUE FALTABA!! ---
+// Le dice a Express que sirva todos los archivos (HTML, CSS, JS) 
+// de la carpeta superior (la que contiene 'regutech-backend' y tus .html).
 app.use(express.static(path.join(__dirname, '..'))); 
+// ------------------------------------------
 
-// Rutas
-app.get('/', (req, res) => {
-  res.send('Servidor de ReguTech funcionando');
-});
-
-// Importamos las rutas de autenticación
+// --- Rutas de API ---
 const authRoutes = require('./routes/auth');
-app.use('/api', authRoutes); // Prefijo /api (tus rutas serán /api/login, /api/register)
+app.use('/api', authRoutes); 
 
 const policyRoutes = require('./routes/policies.js');
 app.use('/api/policies', policyRoutes);
 
-const checklistRoutes = require('./routes/checklist.js');
+const checklistRoutes = require('./routes/checklist'); // Usamos el singular 'checklist.js'
 app.use('/api/checklists', checklistRoutes);
 
 const riesgoRoutes = require('./routes/riesgos.js');
 app.use('/api/riesgos', riesgoRoutes);
 
-const backofficeRoutes = require('./routes/backoffice.js');
-app.use('/api/backoffice', backofficeRoutes);
-
 const auditoriaRoutes = require('./routes/auditorias.js');
 app.use('/api/auditorias', auditoriaRoutes);
 
-// --- AÑADIR ESTAS DOS LÍNEAS ---
 const planesRoutes = require('./routes/planes.js');
 app.use('/api/planes', planesRoutes);
-// ---------------------------------
 
-// Iniciar el servidor
+const backofficeRoutes = require('./routes/backoffice.js');
+app.use('/api/backoffice', backofficeRoutes);
+
+// --- Iniciar el servidor ---
 app.listen(PORT, () => {
   console.log(`Servidor de ReguTech escuchando en el puerto ${PORT}`);
 });

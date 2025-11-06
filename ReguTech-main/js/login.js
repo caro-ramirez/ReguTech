@@ -1,54 +1,57 @@
 // js/login.js
 
-// Espera a que el contenido del HTML esté cargado
-document.addEventListener('DOMContentLoaded', () => {
-  const loginForm = document.getElementById('login-form');
-  const errorP = document.getElementById('error-message');
+(function() {
+    const loginForm = document.getElementById('login-form');
+    const submitButton = document.getElementById('submit-button');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const errorMessage = document.getElementById('error-message');
 
-  if (!loginForm) {
-    console.warn('No se encontró el formulario #login-form en esta página.');
-    return;
-  }
+    // Ocultar el error al empezar
+    if(errorMessage) errorMessage.style.display = 'none';
 
-  loginForm.addEventListener('submit', async (e) => {
-    e.preventDefault(); // Evita que la página se recargue
+    if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault(); 
+            
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Ingresando...';
+            if(errorMessage) errorMessage.style.display = 'none';
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+            try {
+                // Ahora 'emailInput' y 'passwordInput' no serán 'null'
+                const email = emailInput.value;
+                const password = passwordInput.value;
+                
+                const response = await fetch('http://localhost:3000/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
 
-    if (!email || !password) {
-      errorP.textContent = 'Por favor, completa ambos campos.';
-      return;
+                const data = await response.json();
+
+                if (!response.ok) {
+                    // Si es 401 (Unauthorized) u otro error
+                    throw new Error(data.message || 'Error al iniciar sesión.');
+                }
+
+                // ¡ÉXITO!
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user_rol', data.rol);
+                
+                // Redirigimos al dashboard
+                window.location.href = 'dashboard.html';
+
+            } catch (err) {
+                console.error('Error de login:', err);
+                if(errorMessage) {
+                    errorMessage.textContent = err.message;
+                    errorMessage.style.display = 'block';
+                }
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión';
+            }
+        });
     }
-
-    try {
-      // 1. Llama a tu API de backend
-      const response = await fetch('http://localhost:3000/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        // Si el servidor responde con 401, 500, etc.
-        errorP.textContent = data.message || 'Error al iniciar sesión.';
-        return;
-      }
-
-      // 2. ¡ÉXITO! Guarda los datos en el navegador
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user_rol', data.rol); // Guardamos el ROL
-      
-      // 3. Redirige al dashboard
-      window.location.href = 'dashboard.html';
-
-    } catch (err) {
-      console.error('Error de red:', err);
-      errorP.textContent = 'Error de conexión con el servidor. ¿El backend está funcionando?';
-    }
-  });
-});
+})();

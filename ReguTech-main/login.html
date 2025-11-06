@@ -19,19 +19,25 @@
                     <img src="./assets/logo-medium.png" alt="ReguTech Logo" class="logo-image mb-4">
                 </a>
                 <h2 class="card-title mb-4">Iniciar Sesión</h2>
+
+                <div id="error-message" class="alert alert-danger" style="display: none;"></div>
+
                 <form id="login-form">
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="emailInput" placeholder="Correo electrónico" required>
-                        <label for="emailInput">Correo electrónico</label>
+                        <input type="email" class="form-control" id="email" placeholder="Correo electrónico" required>
+                        <label for="email">Correo electrónico</label>
                     </div>
                     <div class="form-floating mb-4">
-                        <input type="password" class="form-control" id="passwordInput" placeholder="Contraseña" required>
-                        <label for="passwordInput">Contraseña</label>
+                        <input type="password" class="form-control" id="password" placeholder="Contraseña" required>
+                        <label for="password">Contraseña</label>
                     </div>
-                    <button type="submit" class="btn btn-primary-custom w-100 btn-lg mb-3">
+                    <button type="submit" class="btn btn-primary-custom w-100 btn-lg mb-3" id="submit-button">
                         <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
                     </button>
-                    <p class="text-muted"><a href="./forgot-password.html" class="text-primary-custom text-decoration-none">¿Olvidaste tu contraseña?</a></p>
+                    <hr class="my-4">
+                    <p class="text-muted mb-0">
+                        <a href="forgot-password.html" class="text-primary-custom text-decoration-none">¿Olvidaste tu contraseña?</a>
+                    </p>
                 </form>
             </div>
         </div>
@@ -42,41 +48,8 @@
         </div>
     </div>
 </div>
-<script src="js/login.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    document.getElementById('login-form').addEventListener('submit', async function(event) {
-        event.preventDefault(); // Evita que el formulario se envíe de forma tradicional y recargue la página.
-
-        const email = document.getElementById('emailInput').value;
-        const password = document.getElementById('passwordInput').value;
-
-        try {
-            const response = await fetch('http://localhost:3000/api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                // Si la respuesta es exitosa, guarda el token y redirige.
-                localStorage.setItem('token', data.token);
-                window.location.href = 'dashboard.html'; 
-            } else {
-                // Si la respuesta no es exitosa (por ejemplo, 401 Unauthorized), muestra el error.
-                alert(data.message);
-            }
-        } catch (error) {
-            console.error('Error de red:', error);
-            alert('No se pudo conectar con el servidor. Asegúrate de que esté en ejecución.');
-        }
-    });
-</script>
-
+<script src="js/login.js"></script> 
 </body>
 </html>

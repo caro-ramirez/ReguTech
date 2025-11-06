@@ -13,27 +13,27 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom shadow-sm">
-    <div class="container">
-        <a class="navbar-brand d-flex align-items-center" href="dashboard.html">
-            <img src="./assets/logo.png" alt="ReguTech Logo" width="40" height="40" class="me-2">
+    <div class="container py-2">
+        <a class="navbar-brand d-flex align-items-center" href="./dashboard.html">
+            <img src="./assets/logo.png" alt="ReguTech Logo" class="logo-image me-2">
             <span class="logo-text">ReguTech</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" href="dashboard.html">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="checklist-list.html">Checklists</a>
+                    <a class="nav-link mx-2" href="checklist-list.html">Checklists</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="policy-list.html">Políticas</a>
+                    <a class="nav-link mx-2" href="policy-list.html">Políticas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="audit-list.html">Auditorías</a>
+                    <a class="nav-link mx-2" href="audit-list.html">Auditorías</a>
                 </li>
             </ul>
             <div class="d-flex">
@@ -52,7 +52,7 @@
     <div class="container">
         <h1 class="text-center text-dark-blue mb-4">Dashboard Principal</h1>
 
-        <div id="colaborador-view">
+        <div id="colaborador-view" style="display: none;">
             <div class="alert alert-warning d-flex align-items-center justify-content-between mb-4 shadow-sm" role="alert">
                 <span><i class="fas fa-exclamation-triangle me-2"></i>¡Atención! Tienes una autoevaluación pendiente.</span>
                 <a href="respond-checklist.html" class="btn btn-primary-custom">Continuar Autoevaluación</a>
@@ -161,8 +161,9 @@
                 <h3 class="card-title text-center mb-4"><i class="fas fa-cogs me-2"></i> Backoffice de Plataforma (SuperAdmin)</h3>
                 <p>Gestión global de la plataforma, clientes y plantillas maestras.</p>
                 <ul>
-                    <li><a href="clients-list.html">Administrar Clientes</a></li>
-                    <li><a href="content-management.html">Gestionar Plantillas de Checklists</a></li>
+                    <li><a href="companies-list.html">Administrar Clientes (Empresas)</a></li>
+                    <li><a href="content-management.html">Gestionar Plantillas de Contenido</a></li>
+                    <li><a href="platform-stats.html">Ver Estadísticas de la Plataforma</a></li>
                 </ul>
             </div>
         </div> </div>
