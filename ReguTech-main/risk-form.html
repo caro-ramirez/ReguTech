@@ -39,7 +39,7 @@
                 <a class="btn btn-link me-2" href="profile.html">
                     <i class="fas fa-user-circle me-1"></i>Mi Perfil
                 </a>
-                <a class="btn btn-link" href="index.html">
+                <a class="btn btn-link" id="logout-button" href="#">
                     <i class="fas fa-sign-out-alt me-1"></i>Cerrar Sesión
                 </a>
             </div>
@@ -50,20 +50,20 @@
 <div class="container py-5">
     <h1 class="text-center text-dark-blue mb-4">Registrar Nuevo Riesgo</h1>
     <div class="card shadow-sm p-4">
-        <form>
+        <form id="risk-form">
             <div class="mb-3">
                 <label for="descripcion-riesgo" class="form-label">Descripción</label>
-                <textarea class="form-control" id="descripcion-riesgo" rows="3"></textarea>
+                <textarea class="form-control" id="descripcion-riesgo" rows="3" required></textarea>
             </div>
             <div class="mb-3">
                 <label class="form-label">Tipo</label>
                 <div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="tipo-riesgo" id="riesgo" value="riesgo" checked>
+                        <input class="form-check-input" type="radio" name="tipo-riesgo" id="riesgo" value="Riesgo" checked>
                         <label class="form-check-label" for="riesgo">Riesgo</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="tipo-riesgo" id="oportunidad" value="oportunidad">
+                        <input class="form-check-input" type="radio" name="tipo-riesgo" id="oportunidad" value="Oportunidad">
                         <label class="form-check-label" for="oportunidad">Oportunidad</label>
                     </div>
                 </div>
@@ -84,14 +84,19 @@
                     <option>Alto</option>
                 </select>
             </div>
+            
+            <div class="alert alert-danger mt-3" id="error-message" style="display: none;">
+                </div>
+
             <div class="d-flex justify-content-between mt-4">
-                <a href="risks.html" class="btn btn-outline-custom">Cancelar</a>
-                <button type="submit" class="btn btn-primary-custom">Guardar</button>
+                <a href="risk.html" class="btn btn-outline-custom">Cancelar</a>
+                <button type="submit" class="btn btn-primary-custom" id="submit-button">Guardar</button>
             </div>
         </form>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/risk-form.js"></script>
 </body>
 </html>

@@ -12,12 +12,9 @@
 </head>
 <body>
 
-<<<<<<< HEAD
-<div id="header-container"></div>
-=======
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom shadow-sm">
     <div class="container">
-        <a class="navbar-brand d-flex align-items-center" href="#">
+        <a class="navbar-brand d-flex align-items-center" href="dashboard.html">
             <img src="./assets/logo.png" alt="ReguTech Logo" width="40" height="40" class="me-2">
             <span class="logo-text">ReguTech</span>
         </a>
@@ -43,232 +40,135 @@
                 <a class="btn nav-profile-btn me-2" href="profile.html">
                     <i class="fas fa-user-circle me-1"></i>Mi Perfil
                 </a>
-                <a class="btn nav-logout-btn" href="index.html">
+                <a class="btn nav-logout-btn" id="logout-button" href="#">
                     <i class="fas fa-sign-out-alt me-1"></i>Cerrar Sesión
                 </a>
             </div>
         </div>
     </div>
 </nav>
->>>>>>> 361319e74488cd231725d48db102a177ef85e6af
 
 <div class="container-fluid py-4">
     <div class="container">
         <h1 class="text-center text-dark-blue mb-4">Dashboard Principal</h1>
-        <div class="alert alert-warning d-flex align-items-center justify-content-between mb-4 shadow-sm" role="alert">
-            <span><i class="fas fa-exclamation-triangle me-2"></i>¡Atención! Tienes una autoevaluación pendiente.</span>
-            <a href="respond-checklist.html" class="btn btn-primary-custom">Continuar Autoevaluación</a>
-        </div>
-        
-        <div class="row g-4 mb-5">
-            <div class="col-md-3">
-                <div class="card p-3 shadow-sm border-0 rounded-4 text-center">
-                    <i class="fas fa-check-circle fa-2x text-success mb-2"></i>
-                    <h5 class="card-title text-muted">Cumplimiento General</h5>
-                    <h2 class="display-4 fw-bold text-dark-blue">85%</h2>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card p-3 shadow-sm border-0 rounded-4 text-center">
-                    <i class="fas fa-exclamation-triangle fa-2x text-danger mb-2"></i>
-                    <h5 class="card-title text-muted">Riesgos Abiertos</h5>
-                    <h2 class="display-4 fw-bold text-danger">7</h2>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card p-3 shadow-sm border-0 rounded-4 text-center">
-                    <i class="fas fa-list-check fa-2x text-primary-custom mb-2"></i>
-                    <h5 class="card-title text-muted">Tareas Pendientes</h5>
-                    <h2 class="display-4 fw-bold text-primary-custom">24</h2>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card p-3 shadow-sm border-0 rounded-4 text-center">
-                    <i class="fas fa-clipboard-check fa-2x text-info-custom mb-2"></i>
-                    <h5 class="card-title text-muted">Auditorías Finalizadas</h5>
-                    <h2 class="display-4 fw-bold text-info-custom">12</h2>
-                </div>
-            </div>
-        </div>
 
-        <div class="card p-4 mb-5 shadow-sm border-0 rounded-4">
-            <h3 class="card-title text-center mb-4"><i class="fas fa-lightbulb me-2"></i> Priorización de Mejoras</h3>
-            <div class="alert alert-info d-flex align-items-center justify-content-center" role="alert">
-                <i class="fas fa-chart-bar me-3 fs-4"></i>
-                <div>
-                    <h5 class="alert-heading mb-1 text-primary-dark">Análisis de Hallazgos por Área</h5>
-                    <p class="mb-0">El área de **Operaciones de Clientes** tiene la mayor cantidad de hallazgos. <a href="hallazgos-detalle.html" class="alert-link">Ver detalles y sugerencias</a>.</p>
-                </div>
+        <div id="colaborador-view">
+            <div class="alert alert-warning d-flex align-items-center justify-content-between mb-4 shadow-sm" role="alert">
+                <span><i class="fas fa-exclamation-triangle me-2"></i>¡Atención! Tienes una autoevaluación pendiente.</span>
+                <a href="respond-checklist.html" class="btn btn-primary-custom">Continuar Autoevaluación</a>
             </div>
-            <div class="row g-4 justify-content-center">
-                <div class="col-md-8">
-                    <canvas id="barChart"></canvas>
+            
+            <div class="row g-4 mb-4">
+                <div class="col-md-3">
+                    <div class="card p-3 shadow-sm border-0 rounded-4 text-center">
+                        <i class="fas fa-check-circle fa-2x text-success mb-2"></i>
+                        <h5 class="card-title text-muted">Cumplimiento General</h5>
+                        <h2 class="display-4 fw-bold text-dark-blue">85%</h2>
+                    </div>
                 </div>
-            </div>
-        </div>
-        
-        <div class="card p-4 mb-5 shadow-sm border-0 rounded-4">
-            <h3 class="card-title text-center mb-4"><i class="fas fa-chart-line me-2"></i> Optimización de Cumplimiento</h3>
-            <div class="row g-4 align-items-center">
-                <div class="col-md-8">
-                    <canvas id="complianceChart"></canvas>
+                <div class="col-md-3">
+                    <div class="card p-3 shadow-sm border-0 rounded-4 text-center">
+                        <i class="fas fa-exclamation-triangle fa-2x text-danger mb-2"></i>
+                        <h5 class="card-title text-muted">Riesgos Abiertos</h5>
+                        <h2 class="display-4 fw-bold text-danger">7</h2>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="alert alert-info" role="alert">
-                        <h5 class="alert-heading mb-1 text-primary-dark">Proyección de Cumplimiento</h5>
-                        <p class="mb-0">Tu porcentaje de cumplimiento general se proyecta para alcanzar el **95%** en el próximo trimestre, basado en el historial de tareas completadas.</p>
+                <div class="col-md-3">
+                    <div class="card p-3 shadow-sm border-0 rounded-4 text-center">
+                        <i class="fas fa-list-check fa-2x text-primary-custom mb-2"></i>
+                        <h5 class="card-title text-muted">Tareas Pendientes</h5>
+                        <h2 class="display-4 fw-bold text-primary-custom">24</h2>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card p-3 shadow-sm border-0 rounded-4 text-center">
+                        <i class="fas fa-clipboard-check fa-2x text-info-custom mb-2"></i>
+                        <h5 class="card-title text-muted">Auditorías Finalizadas</h5>
+                        <h2 class="display-4 fw-bold text-info-custom">12</h2>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row g-4">
-            <div class="col-md-6">
-                <div class="card p-4 shadow-sm border-0 rounded-4 h-100">
-                    <h5 class="card-title text-center text-dark-blue mb-4">Distribución de Tipos de Riesgo</h5>
-                    <canvas id="riskChart"></canvas>
+            <div class="row g-4 mb-5">
+                <div class="col-md-6">
+                    <h4 class="text-dark-blue">Políticas por Leer</h4>
+                    <ul class="list-group shadow-sm rounded-4" id="lista-politicas-pendientes">
+                        </ul>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="text-dark-blue">Checklists Pendientes</h4>
+                    <ul class="list-group shadow-sm rounded-4" id="lista-checklists-pendientes">
+                        </ul>
                 </div>
             </div>
-            <div class="col-md-6">
-                 <div class="card p-4 shadow-sm border-0 rounded-4 h-100">
-                    <h5 class="card-title text-center text-dark-blue mb-4">Planes de Acción Recientes</h5>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Plan de Ciberseguridad
-                            <span class="badge bg-success rounded-pill">Completo</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Auditoría ISO 9001 (Q3)
-                            <span class="badge bg-warning text-dark rounded-pill">En Progreso</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Mejora de Procesos PLD
-                            <span class="badge bg-info-custom rounded-pill">Pendiente</span>
-                        </li>
-                    </ul>
+
+            <div class="card p-4 mb-5 shadow-sm border-0 rounded-4">
+                <h3 class="card-title text-center mb-4"><i class="fas fa-chart-line me-2"></i> Optimización de Cumplimiento</h3>
+                <div class="row g-4 align-items-center">
+                    <div class="col-md-8">
+                        <canvas id="complianceChart"></canvas>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="alert alert-info" role="alert">
+                            <h5 class="alert-heading mb-1 text-primary-dark">Proyección de Cumplimiento</h5>
+                            <p class="mb-0">Tu porcentaje de cumplimiento general se proyecta para alcanzar el **95%** en el próximo trimestre.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </div> <div id="admin-view" style="display: none;">
+            <div class="card p-4 mb-5 shadow-sm border-0 rounded-4">
+                <h3 class="card-title text-center mb-4"><i class="fas fa-lightbulb me-2"></i> Priorización de Mejoras (Admin)</h3>
+                <div class="alert alert-info d-flex align-items-center justify-content-center" role="alert">
+                    <i class="fas fa-chart-bar me-3 fs-4"></i>
+                    <div>
+                        <h5 class="alert-heading mb-1 text-primary-dark">Análisis de Hallazgos por Área</h5>
+                        <p class="mb-0">El área de **Operaciones de Clientes** tiene la mayor cantidad de hallazgos. <a href="hallazgos-detalle.html" class="alert-link">Ver detalles</a>.</p>
+                    </div>
+                </div>
+                <div class="row g-4 justify-content-center">
+                    <div class="col-md-8">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card p-4 shadow-sm border-0 rounded-4 h-100">
+                        <h5 class="card-title text-center text-dark-blue mb-4">Distribución de Tipos de Riesgo (Admin)</h5>
+                        <canvas id="riskChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                     <div class="card p-4 shadow-sm border-0 rounded-4 h-100">
+                        <h5 class="card-title text-center text-dark-blue mb-4">Planes de Acción Recientes (Admin)</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Plan de Ciberseguridad
+                                <span class="badge bg-success rounded-pill">Completo</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Auditoría ISO 9001 (Q3)
+                                <span class="badge bg-warning text-dark rounded-pill">En Progreso</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div> <div id="super-admin-view" style="display: none;">
+             <div class="card p-4 mb-5 shadow-sm border-0 rounded-4" style="background-color: #f4fff4; border: 1px solid #28a745;">
+                <h3 class="card-title text-center mb-4"><i class="fas fa-cogs me-2"></i> Backoffice de Plataforma (SuperAdmin)</h3>
+                <p>Gestión global de la plataforma, clientes y plantillas maestras.</p>
+                <ul>
+                    <li><a href="clients-list.html">Administrar Clientes</a></li>
+                    <li><a href="content-management.html">Gestionar Plantillas de Checklists</a></li>
+                </ul>
+            </div>
+        </div> </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const root = document.documentElement;
-        const colors = {
-            darkBlue: getComputedStyle(root).getPropertyValue('--color-primary-dark'),
-            primary: getComputedStyle(root).getPropertyValue('--color-primary'),
-            secondary: getComputedStyle(root).getPropertyValue('--color-secondary'),
-            accent: getComputedStyle(root).getPropertyValue('--color-accent'),
-            background: getComputedStyle(root).getPropertyValue('--color-background')
-        };
-
-        const complianceCtx = document.getElementById('complianceChart').getContext('2d');
-        new Chart(complianceCtx, {
-            type: 'line',
-            data: {
-                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
-                datasets: [{
-                    label: 'Cumplimiento (%)',
-                    data: [75, 80, 85, 88, 92, 95],
-                    backgroundColor: 'rgba(32, 178, 170, 0.2)',
-                    borderColor: colors.secondary,
-                    borderWidth: 2,
-                    tension: 0.4,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100
-                    }
-                }
-            }
-        });
-
-        const riskCtx = document.getElementById('riskChart').getContext('2d');
-        new Chart(riskCtx, {
-            type: 'pie',
-            data: {
-                labels: ['Operativos', 'Estratégicos', 'Financieros', 'De Cumplimiento'],
-                datasets: [{
-                    label: 'Tipos de Riesgo',
-                    data: [35, 20, 25, 20],
-                    backgroundColor: [
-                        colors.primary,
-                        colors.accent,
-                        colors.secondary,
-                        colors.darkBlue
-                    ],
-                    hoverOffset: 4
-                }]
-            },
-            options: {
-                responsive: true
-            }
-        });
-        
-        const barCtx = document.getElementById('barChart').getContext('2d');
-        new Chart(barCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Operaciones', 'RRHH', 'Legal', 'IT'],
-                datasets: [{
-                    label: 'Hallazgos Abiertos',
-                    data: [5, 2, 1, 3],
-                    backgroundColor: colors.primary,
-                    borderColor: colors.primary,
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    });
-</script>
-<script>
-    // Esta función carga el contenido de header.html y lo inyecta en el div con id "header-container".
-    fetch('header.html')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('No se pudo cargar el header.html');
-            }
-            return response.text();
-        })
-        .then(html => {
-            const headerContainer = document.getElementById('header-container');
-            if (headerContainer) {
-                headerContainer.innerHTML = html;
-
-                // Opcional: Si quieres agregar lógica de eventos a los botones del header
-                // Por ejemplo, para manejar el cierre de sesión
-                const logoutButton = document.getElementById('logoutButton');
-                if (logoutButton) {
-                    logoutButton.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        localStorage.removeItem('token');
-                        console.log('se cerro la sesion');
-                        window.location.href = 'index.html'; // O tu página de login
-                    });
-                }
-            }
-        })
-        .catch(error => console.error('Error al cargar el header:', error));
-</script>
+<script src="js/dashboard.js"></script>
 </body>
 </html>

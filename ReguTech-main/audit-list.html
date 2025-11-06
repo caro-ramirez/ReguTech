@@ -40,7 +40,7 @@
                 <a class="btn nav-profile-btn me-2" href="profile.html">
                     <i class="fas fa-user-circle me-1"></i>Mi Perfil
                 </a>
-                <a class="btn nav-logout-btn" href="index.html">
+                <a class="btn nav-logout-btn" id="logout-button" href="#">
                     <i class="fas fa-sign-out-alt me-1"></i>Cerrar Sesión
                 </a>
             </div>
@@ -63,21 +63,17 @@
                         <th scope="col">Fecha</th>
                         <th scope="col">Área a Auditar</th>
                         <th scope="col">Responsable</th>
+                        <th scope="col" id="columna-cliente" style="display: none;">Cliente</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="audit-list-tbody">
                     <tr>
-                        <td>2025-08-10</td>
-                        <td>Procesos de Captación de Clientes</td>
-                        <td>Laura Pérez</td>
-                        <td><a href="audit-findings-form.html" class="btn btn-primary-custom btn-sm">Registrar Hallazgos</a></td>
-                    </tr>
-                    <tr>
-                        <td>2025-09-20</td>
-                        <td>Monitoreo Transaccional PLD</td>
-                        <td>Juan Gómez</td>
-                        <td><a href="audit-findings-form.html" class="btn btn-primary-custom btn-sm">Registrar Hallazgos</a></td>
+                        <td colspan="5" class="text-center">
+                            <div class="spinner-border text-primary-custom" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -92,6 +88,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/audit-list.js"></script>
 
 </body>
 </html>
