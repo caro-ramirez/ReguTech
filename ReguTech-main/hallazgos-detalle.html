@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReguTech - Detalles de Hallazgos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom shadow-sm">
+    <div class="container py-2">
+        <a class="navbar-brand d-flex align-items-center" href="./dashboard.html">
+            <img src="./assets/logo.png" alt="ReguTech Logo" class="logo-image me-2">
+            <span class="logo-text">ReguTech</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link mx-2" href="dashboard.html">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-2" href="checklist-list.html">Checklists</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-2" href="#">Políticas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-2" href="audit-list.html">Auditorías</a>
+                </li>
+            </ul>
+            <div class="d-flex">
+                <a class="btn nav-profile-btn me-2" href="profile.html">
+                    <i class="fas fa-user-circle me-1"></i>Mi Perfil
+                </a>
+                <a class="btn nav-logout-btn" href="index.html">
+                    <i class="fas fa-sign-out-alt me-1"></i>Cerrar Sesión
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container py-5">
+    <h1 class="text-center text-dark-blue mb-4">Detalles de Hallazgos - Operaciones de Clientes</h1>
+    <div class="card shadow-sm p-4">
+        <h2 class="card-title text-center text-primary-custom mb-4">Listado de Hallazgos Críticos (5)</h2>
+        
+        <div class="mb-4">
+            <h4 class="text-primary-dark">Hallazgo 1: Documentación Incompleta en Altas (No Conformidad Mayor)</h4>
+            <p class="text-muted">Se encontró que el 15% de los expedientes de nuevos clientes carecen de al menos un documento requerido para la verificación de identidad, según la normativa vigente.</p>
+            <p><strong>Fecha Detectado:</strong> 2025-08-12 | <strong>Responsable:</strong> Equipo de Operaciones</p>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-outline-custom btn-sm"><i class="fas fa-pen me-1"></i> Editar</button>
+            </div>
+            <hr>
+        </div>
+
+        <div class="mb-4">
+            <h4 class="text-primary-dark">Hallazgo 2: Proceso de Verificación Lento (No Conformidad Menor)</h4>
+            <p class="text-muted">El tiempo promedio de verificación de antecedentes para clientes de alto riesgo excede en un 30% el umbral interno establecido, generando posibles brechas temporales.</p>
+            <p><strong>Fecha Detectado:</strong> 2025-08-15 | <strong>Responsable:</strong> Compliance Officer</p>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-outline-custom btn-sm"><i class="fas fa-pen me-1"></i> Editar</button>
+            </div>
+            <hr>
+        </div>
+
+        <div class="mb-4">
+            <h4 class="text-primary-dark">Hallazgo 3: Capacitación Deficiente en PLD (Observación)</h4>
+            <p class="text-muted">Se observó una falta de capacitación actualizada en Prevención de Lavado de Dinero (PLD) para el personal de primera línea, lo cual podría llevar a omisiones en la identificación de transacciones sospechosas.</p>
+            <p><strong>Fecha Detectado:</strong> 2025-08-18 | <strong>Responsable:</strong> Recursos Humanos</p>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-outline-custom btn-sm"><i class="fas fa-pen me-1"></i> Editar</button>
+            </div>
+            <hr>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="dashboard.html" class="btn btn-primary-custom btn-lg">Volver al Dashboard</a>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

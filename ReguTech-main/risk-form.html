@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReguTech - Nuevo Riesgo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom shadow-sm">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="./dashboard.html">
+            <img src="./assets/logo.png" alt="ReguTech Logo" width="40" height="40" class="me-2">
+            <span class="logo-text">ReguTech</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboard.html">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="checklist-list.html">Checklists</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="policy-list.html">Políticas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="audit-list.html">Auditorías</a>
+                </li>
+            </ul>
+            <div class="d-flex">
+                <a class="btn btn-link me-2" href="profile.html">
+                    <i class="fas fa-user-circle me-1"></i>Mi Perfil
+                </a>
+                <a class="btn btn-link" href="index.html">
+                    <i class="fas fa-sign-out-alt me-1"></i>Cerrar Sesión
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container py-5">
+    <h1 class="text-center text-dark-blue mb-4">Registrar Nuevo Riesgo</h1>
+    <div class="card shadow-sm p-4">
+        <form>
+            <div class="mb-3">
+                <label for="descripcion-riesgo" class="form-label">Descripción</label>
+                <textarea class="form-control" id="descripcion-riesgo" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Tipo</label>
+                <div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="tipo-riesgo" id="riesgo" value="riesgo" checked>
+                        <label class="form-check-label" for="riesgo">Riesgo</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="tipo-riesgo" id="oportunidad" value="oportunidad">
+                        <label class="form-check-label" for="oportunidad">Oportunidad</label>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="probabilidad" class="form-label">Probabilidad</label>
+                <select class="form-select" id="probabilidad">
+                    <option>Baja</option>
+                    <option>Media</option>
+                    <option>Alta</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="impacto" class="form-label">Impacto</label>
+                <select class="form-select" id="impacto">
+                    <option>Bajo</option>
+                    <option>Medio</option>
+                    <option>Alto</option>
+                </select>
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+                <a href="risks.html" class="btn btn-outline-custom">Cancelar</a>
+                <button type="submit" class="btn btn-primary-custom">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,445 @@
+:root {
+    --color-primary-dark: #2c215e; /* Violeta oscuro */
+    --color-primary: #5e4d7d; /* Lila oscuro */
+    --color-secondary: #00bcd4; /* Cian vibrante */
+    --color-accent: #673ab7; /* Morado */
+    --color-background: #f8f9fa; /* Gris claro */
+    --color-text-dark: #343a40;
+    --color-text-muted: #6c757d;
+    --color-text-light: #ffffff;
+
+    /* Nuevos gradientes */
+    --gradient-primary: linear-gradient(45deg, #2c215e, #5e4d7d);
+    --gradient-secondary: linear-gradient(45deg, #5e4d7d, #673ab7);
+    --gradient-accent: linear-gradient(45deg, #00bcd4, #00a8b7);
+}
+
+body {
+    background-color: var(--color-background);
+    font-family: 'Poppins', sans-serif;
+    color: var(--color-text-dark);
+    line-height: 1.6;
+}
+
+/* Navbar */
+.navbar-custom {
+    background-color: var(--color-primary-dark);
+    padding: 1rem 0;
+}
+.logo-image {
+    width: 45px;
+    height: 45px;
+}
+.logo-text {
+    color: var(--color-text-light);
+    font-weight: 700;
+    font-size: 1.6rem;
+}
+.navbar-brand, .nav-link {
+    color: var(--color-text-light) !important;
+}
+.nav-link {
+    font-weight: 500;
+    position: relative;
+}
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--color-secondary);
+    transition: width .3s ease-in-out;
+}
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Botones */
+.btn-primary-custom, .btn-primary-custom:hover, .btn-primary-custom:active, .btn-primary-custom:focus {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-text-light);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(94, 77, 125, 0.3);
+    text-decoration: none;
+}
+.btn-primary-custom:hover {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+.btn-outline-custom {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+.btn-outline-custom:hover {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+}
+
+/* Estilos de los botones del Navbar */
+.nav-profile-btn {
+    color: var(--color-text-light);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50px;
+    padding: 0.5rem 1.2rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+.nav-profile-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-text-light);
+    color: var(--color-text-light);
+}
+.nav-logout-btn {
+    color: var(--color-secondary) !important;
+    font-weight: 600;
+    border: none;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    margin-left: 0.5rem;
+}
+.nav-logout-btn:hover {
+    color: var(--color-text-light) !important;
+    transform: translateY(-1px);
+}
+
+/* Header Section (Landing) */
+.header-section {
+    background-image: linear-gradient(45deg, #2c215e, #5e4d7d);
+    color: var(--color-text-light);
+    padding: 8rem 0;
+    position: relative;
+    overflow: hidden;
+}
+.header-section h1 {
+    font-weight: 700;
+    font-size: 3.5rem;
+    line-height: 1.2;
+}
+.header-section p.lead {
+    font-size: 1.3rem;
+    max-width: 800px;
+    margin: 0 auto 3rem auto;
+}
+
+/* Secciones generales */
+.section-title {
+    font-weight: 700;
+    font-size: 2.5rem;
+    color: var(--color-primary-dark);
+    position: relative;
+    padding-bottom: 1rem;
+}
+.section-title::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    width: 80px;
+    height: 4px;
+    background-color: var(--color-secondary);
+    border-radius: 2px;
+}
+.bg-light-gradient {
+    background: linear-gradient(to bottom, var(--color-background), #e9ecef);
+}
+
+/* Tarjetas de Features */
+.features-section .card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 2.5rem;
+}
+.features-section .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+.feature-icon {
+    font-size: 3.5rem;
+    color: var(--color-secondary);
+    margin-bottom: 1rem;
+}
+.features-section .card-title {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+}
+.features-section .card-text {
+    font-size: 1rem;
+}
+
+/* Sección Quienes Somos */
+.about-section {
+    background-color: var(--color-background);
+    padding: 4rem 0;
+}
+.about-section .card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    padding: 2.5rem;
+}
+.about-section h2::after {
+    left: 0;
+    transform: translateX(0);
+}
+.about-section .text-primary-custom {
+    color: var(--color-primary) !important;
+}
+
+
+/* Secciones de Precios */
+.pricing-section {
+    background-color: var(--color-background);
+}
+.pricing-card {
+    border: none;
+    border-radius: 1.2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+.pricing-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+.pricing-card .card-header {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    border-bottom: none;
+    padding: 1.5rem;
+    font-size: 1.8rem;
+    letter-spacing: 0.05em;
+}
+.pricing-card-title {
+    color: var(--color-primary-dark);
+}
+.pricing-card ul {
+    font-size: 1.05rem;
+}
+.pricing-card ul li i {
+    font-size: 1.1em;
+}
+.pricing-card .card-header.bg-primary-gradient {
+    background-image: linear-gradient(to right, var(--color-primary-dark), var(--color-primary));
+}
+.pricing-card .card-header.bg-secondary-gradient {
+    background-image: linear-gradient(to right, var(--color-accent), var(--color-primary));
+}
+.pricing-card .card-header.bg-accent-gradient {
+    background-image: linear-gradient(to right, var(--color-secondary), var(--color-accent));
+}
+
+/* Footer */
+.footer {
+    background-color: var(--color-primary-dark);
+    color: var(--color-text-light);
+    padding: 2rem 0;
+    font-size: 0.9rem;
+    border-top: 5px solid var(--color-secondary);
+}
+.footer .social-icons a {
+    color: var(--color-secondary);
+    font-size: 1.4rem;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+.footer .social-icons a:hover {
+    color: var(--color-text-light);
+}
+
+/* Estilos para login.html */
+.login-page-wrapper {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="0" y="0" width="100" height="100" fill="%23f8f9fa"/><path fill="%23e0e0e0" d="M0 0L50 100L100 0Z" opacity="0.1"/><path fill="%23d0d0d0" d="M0 100L50 0L100 100Z" opacity="0.05"/><path fill="%23c0c0c0" d="M0 50L50 0L100 50L50 100Z" opacity="0.02"/></svg>');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    z-index: 1; /* Asegura que el fondo esté detrás del contenido */
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+/* Agrega un overlay sutil para que el formulario se destaque más */
+.login-page-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(44, 33, 94, 0.05);
+    z-index: -1;
+}
+
+.login-container {
+    max-width: 450px;
+    width: 100%;
+    z-index: 2;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+.login-container .card {
+    border-radius: 1.2rem;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    border: none;
+}
+.login-container .card-body {
+    padding: 1rem;
+}
+.login-container .logo-image {
+    width: 290px;
+    height: 80px;
+    position: center;
+}
+.login-container h2 {
+    color: var(--color-primary-dark);
+    font-weight: 600;
+}
+.login-container .form-control {
+    border-radius: 0.75rem;
+    padding: 1.2rem 1rem;
+    font-size: 1.1rem;
+    border: 1px solid #ced4da;
+}
+.login-container .form-floating label {
+    color: var(--color-text-muted);
+}
+.login-container .btn-primary-custom {
+    border-radius: 0.75rem;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    background-image: linear-gradient(45deg, #00bcd4, #00a8b7);
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+}
+.login-container .btn-primary-custom:hover {
+    background-image: linear-gradient(45deg, #5e4d7d, #673ab7);
+    box-shadow: 0 7px 20px rgba(0, 188, 212, 0.4);
+    transform: translateY(-1px);
+}
+.back-to-home-link {
+    color: var(--color-primary-dark);
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: 1.5rem;
+    display: inline-block;
+    transition: color 0.3s ease;
+}
+.back-to-home-link:hover {
+    color: var(--color-secondary);
+    text-decoration: underline;
+}
+
+/* Estilos del Dashboard y otras páginas de la aplicación */
+.text-dark-blue {
+    color: var(--color-primary-dark);
+}
+.alert-warning {
+    border-left: 5px solid var(--color-accent);
+    background-color: #fefcf3;
+}
+.progress-bar-custom {
+    background-color: var(--color-secondary);
+}
+.table thead th {
+    background-color: var(--color-primary-dark);
+    color: var(--color-text-light);
+    border-bottom: none;
+}
+.table tbody tr:hover {
+    background-color: #f0f0f0;
+}
+.container-fluid {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+.table th {
+    font-weight: 600;
+}
+
+.table thead th {
+    border-bottom: 2px solid var(--color-primary-dark);
+}
+
+.table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Colores personalizados para Badges y Progress Bars */
+.badge.bg-success-custom {
+    background-color: var(--color-secondary) !important;
+    color: white;
+}
+
+.badge.bg-primary-custom {
+    background-color: var(--color-primary) !important;
+    color: white;
+}
+
+.badge.bg-primary-custom-light {
+    background-color: var(--color-primary-dark) !important;
+    color: white;
+}
+
+.badge.bg-warning.text-dark-custom {
+    background-color: #ffc107 !important;
+    color: #212529 !important;
+}
+
+.progress-bar.bg-info-custom {
+    background-color: var(--color-secondary) !important;
+}
+
+/* Estilos para los botones del Navbar */
+.nav-profile-btn {
+    color: var(--color-secondary);
+    border: 1px solid var(--color-secondary);
+    border-radius: 50px;
+    padding: 0.5rem 1.2rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+.nav-profile-btn:hover {
+    background-color: var(--color-secondary);
+    color: var(--color-text-light);
+}
+.nav-logout-btn {
+    color: var(--color-secondary) !important;
+    font-weight: 600;
+    border: none;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    margin-left: 0.5rem;
+}
+.nav-logout-btn:hover {
+    color: var(--color-text-light) !important;
+    background-color: var(--color-secondary) !important;
+    border-radius: 50px;
+}
+/* Colores personalizados para Badges y Progress Bars */
+.badge.bg-success-custom {
+    background-color: #28a745 !important; /* Verde Bootstrap */
+    color: white;
+}
+
+/* ... [Resto de tus estilos, incluyendo los de .nav-profile-btn y .nav-logout-btn] ... */
+
+/* Estilos para los botones de acción en la tabla */
+.btn.rounded-pill {
+    border-radius: 50rem !important; /* Hace que el botón sea completamente redondeado */
+}
