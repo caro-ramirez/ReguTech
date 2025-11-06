@@ -25,7 +25,7 @@ app.use('/api', authRoutes); // Prefijo /api (tus rutas serán /api/login, /api/
 const policyRoutes = require('./routes/policies.js');
 app.use('/api/policies', policyRoutes);
 
-const checklistRoutes = require('./routes/checklists');
+const checklistRoutes = require('./routes/checklist.js');
 app.use('/api/checklists', checklistRoutes);
 
 const riesgoRoutes = require('./routes/riesgos.js');

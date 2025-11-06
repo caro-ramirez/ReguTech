@@ -23,7 +23,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="clients-list.html">Clientes</a>
+                    <a class="nav-link" href="companies-list.html">Clientes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="content-management.html">Contenido</a>
@@ -36,7 +36,7 @@
                 <a class="btn nav-profile-btn me-2" href="profile.html">
                     <i class="fas fa-user-circle me-1"></i>Mi Perfil
                 </a>
-                <a class="btn nav-logout-btn" href="index.html">
+                <a class="btn nav-logout-btn" id="logout-button" href="#">
                     <i class="fas fa-sign-out-alt me-1"></i>Cerrar Sesión
                 </a>
             </div>
@@ -52,28 +52,28 @@
                 <div class="card p-3 shadow-sm border-0 rounded-4 text-center">
                     <i class="fas fa-building fa-2x text-primary-custom mb-2"></i>
                     <h5 class="card-title text-muted">Total de Clientes</h5>
-                    <h2 class="display-4 fw-bold text-dark-blue">150</h2>
+                    <h2 class="display-4 fw-bold text-dark-blue" id="stats-total-clientes">...</h2>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card p-3 shadow-sm border-0 rounded-4 text-center">
                     <i class="fas fa-users fa-2x text-info-custom mb-2"></i>
-                    <h5 class="card-title text-muted">Usuarios Activos</h5>
-                    <h2 class="display-4 fw-bold text-info-custom">780</h2>
+                    <h5 class="card-title text-muted">Usuarios (Clientes)</h5>
+                    <h2 class="display-4 fw-bold text-info-custom" id="stats-total-usuarios">...</h2>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card p-3 shadow-sm border-0 rounded-4 text-center">
-                    <i class="fas fa-chart-bar fa-2x text-success mb-2"></i>
-                    <h5 class="card-title text-muted">Tasa de Churn</h5>
-                    <h2 class="display-4 fw-bold text-success">3%</h2>
+                    <i class="fas fa-exclamation-triangle fa-2x text-danger mb-2"></i>
+                    <h5 class="card-title text-muted">Hallazgos Totales</h5>
+                    <h2 class="display-4 fw-bold text-danger" id="stats-total-hallazgos">...</h2>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card p-3 shadow-sm border-0 rounded-4 text-center">
                     <i class="fas fa-dollar-sign fa-2x text-accent-custom mb-2"></i>
                     <h5 class="card-title text-muted">MRR</h5>
-                    <h2 class="display-4 fw-bold text-accent-custom">$3M</h2>
+                    <h2 class="display-4 fw-bold text-accent-custom">N/A</h2>
                 </div>
             </div>
         </div>
@@ -97,68 +97,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const root = document.documentElement;
-        const colors = {
-            darkBlue: getComputedStyle(root).getPropertyValue('--color-primary-dark'),
-            primary: getComputedStyle(root).getPropertyValue('--color-primary'),
-            secondary: getComputedStyle(root).getPropertyValue('--color-secondary'),
-            accent: getComputedStyle(root).getPropertyValue('--color-accent'),
-            success: '#28a745',
-            info: '#17a2b8'
-        };
-
-        // Gráfico de adopción de módulos (gráfico de barras)
-        const moduleAdoptionCtx = document.getElementById('moduleAdoptionChart').getContext('2d');
-        new Chart(moduleAdoptionCtx, {
-            type: 'bar',
-            data: {
-                labels: ['ISO 9001', 'PCI DSS', 'Auditorías', 'Riesgos'],
-                datasets: [{
-                    label: 'Porcentaje de Clientes',
-                    data: [85, 60, 90, 75],
-                    backgroundColor: [colors.primary, colors.accent, colors.secondary, colors.darkBlue],
-                    borderColor: [colors.primary, colors.accent, colors.secondary, colors.darkBlue],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100
-                    }
-                }
-            }
-        });
-
-        // Gráfico de crecimiento de clientes (gráfico de línea)
-        const clientGrowthCtx = document.getElementById('clientGrowthChart').getContext('2d');
-        new Chart(clientGrowthCtx, {
-            type: 'line',
-            data: {
-                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
-                datasets: [{
-                    label: 'Nuevos Clientes',
-                    data: [10, 15, 20, 25, 30, 45],
-                    borderColor: colors.accent,
-                    backgroundColor: colors.accent + '40',
-                    fill: true,
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    });
-</script>
+<script src="js/platform-stats.js"></script>
 </body>
 </html>

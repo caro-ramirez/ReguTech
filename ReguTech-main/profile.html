@@ -38,7 +38,7 @@
                 <a class="btn nav-profile-btn me-2" href="profile.html">
                     <i class="fas fa-user-circle me-1"></i>Mi Perfil
                 </a>
-                <a class="btn nav-logout-btn" href="index.html">
+                <a class="btn nav-logout-btn" id="logout-button" href="#">
                     <i class="fas fa-sign-out-alt me-1"></i>Cerrar Sesión
                 </a>
             </div>
@@ -48,24 +48,55 @@
 
 <div class="container py-5">
     <h1 class="text-center text-dark-blue mb-4">Mi Perfil</h1>
-    <div class="card shadow-sm p-4">
+    
+    <div class="card shadow-sm p-4 mb-4">
         <div class="card-body">
-            <form>
+            <form id="profile-form">
                 <div class="mb-3">
                     <label for="profile-name" class="form-label">Nombre Completo</label>
-                    <input type="text" class="form-control" id="profile-name" value="Carolina Ramírez">
+                    <input type="text" class="form-control" id="profile-name" required>
                 </div>
                 <div class="mb-3">
                     <label for="profile-email" class="form-label">Correo Electrónico</label>
-                    <input type="email" class="form-control" id="profile-email" value="carolina.ramirez@example.com" readonly>
+                    <input type="email" class="form-control" id="profile-email" readonly disabled>
                 </div>
                 <div class="mb-3">
                     <label for="profile-role" class="form-label">Rol</label>
-                    <input type="text" class="form-control" id="profile-role" value="Administrador" readonly>
+                    <input type="text" class="form-control" id="profile-role" readonly disabled>
                 </div>
+                
+                <div class="alert alert-danger" id="profile-error-message" style="display: none;"></div>
+                
                 <div class="d-flex justify-content-between">
                     <a href="dashboard.html" class="btn btn-outline-custom">Cancelar</a>
-                    <button type="submit" class="btn btn-primary-custom">Guardar Cambios</button>
+                    <button type="submit" class="btn btn-primary-custom" id="submit-profile-button">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow-sm p-4">
+        <div class="card-body">
+            <h4 class="text-dark-blue">Cambiar Contraseña</h4>
+            <form id="password-form">
+                <div class="mb-3">
+                    <label for="current-password" class="form-label">Contraseña Actual</label>
+                    <input type="password" class="form-control" id="current-password" required>
+                </div>
+                <div class="mb-3">
+                    <label for="new-password" class="form-label">Nueva Contraseña</label>
+                    <input type="password" class="form-control" id="new-password" required>
+                </div>
+                <div class="mb-3">
+                    <label for="confirm-password" class="form-label">Confirmar Nueva Contraseña</label>
+                    <input type="password" class="form-control" id="confirm-password" required>
+                </div>
+                
+                <div class="alert alert-danger" id="password-error-message" style="display: none;"></div>
+                <div class="alert alert-success" id="password-success-message" style="display: none;"></div>
+                
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary-custom" id="submit-password-button">Actualizar Contraseña</button>
                 </div>
             </form>
         </div>
@@ -73,5 +104,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/profile.js"></script>
 </body>
 </html>

@@ -4,22 +4,16 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db'); 
 const { v4: uuidv4 } = require('uuid');
-const { verifyToken } = require('../middleware/auth'); // <-- 1. IMPORTAMOS EL MIDDLEWARE
+const { verifyToken } = require('../middleware/auth');
 
 /*
  * @route   GET /api/policies
- * @desc    Obtener TODAS las políticas PENDIENTES del usuario logueado
- * @access  Privado (necesita estar logueado)
+ * @desc    Obtener TODAS las políticas PENDIENTES del usuario logueado (para el Dashboard)
+ * @access  Privado
  */
-// 2. PROTEGEMOS LA RUTA CON verifyToken
 router.get('/', verifyToken, async (req, res) => {
   try {
-    // 3. Obtenemos el ID del usuario desde el token (gracias al middleware)
     const id_usuario_logueado = req.user.id;
-
-    // 4. Nueva consulta SQL:
-    // Selecciona todas las políticas (p) donde NO EXISTA (LEFT JOIN ... IS NULL)
-    // una entrada en confirmacion_lectura (c) para este usuario.
     const sqlQuery = `
       SELECT p.* FROM POLITICA_COMPLIANCE p
       LEFT JOIN CONFIRMACION_LECTURA c 
@@ -27,10 +21,8 @@ router.get('/', verifyToken, async (req, res) => {
       WHERE c.id_confirmacion IS NULL
       ORDER BY p.nombre;
     `;
-
     const { rows } = await db.query(sqlQuery, [id_usuario_logueado]);
     res.json(rows);
-
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Error del servidor');
@@ -64,10 +56,9 @@ router.get('/:id', verifyToken, async (req, res) => {
  */
 router.post('/:id/confirm', verifyToken, async (req, res) => {
   const id_politica = req.params.id;
-  const id_usuario = req.user.id; // Obtenemos el ID del usuario desde el token
+  const id_usuario = req.user.id; 
 
   try {
-    // Verificamos si ya la confirmó antes (buena práctica)
     const yaConfirmo = await db.query(
       'SELECT * FROM CONFIRMACION_LECTURA WHERE id_usuario = $1 AND id_politica = $2',
       [id_usuario, id_politica]
@@ -77,7 +68,6 @@ router.post('/:id/confirm', verifyToken, async (req, res) => {
       return res.status(400).json({ msg: 'Esta política ya fue confirmada' });
     }
 
-    // Si no la confirmó, creamos la confirmación
     const nuevaConfirmacion = await db.query(
       `INSERT INTO CONFIRMACION_LECTURA (id_confirmacion, id_usuario, id_politica, fecha_confirmacion)
        VALUES ($1, $2, $3, $4) RETURNING *`,
@@ -89,6 +79,34 @@ router.post('/:id/confirm', verifyToken, async (req, res) => {
       data: nuevaConfirmacion.rows[0]
     });
 
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Error del servidor');
+  }
+});
+
+/*
+ * @route   GET /api/policies/status
+ * @desc    (NUEVO) Obtener TODAS las políticas y el estado de lectura del usuario
+ * @access  Privado
+ */
+router.get('/status', verifyToken, async (req, res) => {
+  const id_usuario_logueado = req.user.id;
+  try {
+    // Usamos un LEFT JOIN. Si c.id_confirmacion no es NULL, el usuario la ha leído.
+    const sqlQuery = `
+      SELECT 
+        p.id_politica,
+        p.nombre,
+        p.version,
+        c.id_confirmacion IS NOT NULL AS leida
+      FROM POLITICA_COMPLIANCE p
+      LEFT JOIN CONFIRMACION_LECTURA c 
+        ON p.id_politica = c.id_politica AND c.id_usuario = $1
+      ORDER BY p.nombre;
+    `;
+    const { rows } = await db.query(sqlQuery, [id_usuario_logueado]);
+    res.json(rows);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Error del servidor');

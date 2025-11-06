@@ -45,31 +45,44 @@
 </nav>
 
 <div class="container py-5">
-    <h1 class="text-center text-dark-blue mb-4">Gestión de Contenido (Plantillas)</h1>
-    <div class="card p-4 shadow-sm border-0 rounded-4">
-        <div class="d-flex justify-content-between mb-3">
-            <a href="create-content.html" class="btn btn-primary-custom rounded-pill"><i class="fas fa-plus me-1"></i> Nueva Plantilla</a>
-            <input type="text" class="form-control w-25 rounded-pill" placeholder="Buscar plantilla...">
-        </div>
+    <h1 class="text-center text-dark-blue mb-4">Gestión de Contenido</h1>
+    
+    <div class="d-flex justify-content-end mb-4">
+        <a href="create-content.html" class="btn btn-primary-custom rounded-pill"><i class="fas fa-plus me-1"></i> Nuevo Contenido</a>
+    </div>
+
+    <div class="card p-4 shadow-sm border-0 rounded-4 mb-4">
+        <h3 class="text-dark-blue mb-3">Plantillas de Checklists</h3>
         <div class="table-responsive">
             <table class="table table-hover align-middle">
                 <thead>
                     <tr>
-                        <th scope="col" class="text-primary-dark">Nombre Plantilla (Checklist)</th>
+                        <th scope="col" class="text-primary-dark">Nombre Plantilla</th>
                         <th scope="col" class="text-primary-dark">Versión</th>
                         <th scope="col" class="text-primary-dark">Fecha Creación</th>
                         <th scope="col" class="text-primary-dark">Acciones</th>
                     </tr>
                 </thead>
-                <tbody id="content-tbody">
+                <tbody id="checklists-tbody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card p-4 shadow-sm border-0 rounded-4">
+        <h3 class="text-dark-blue mb-3">Plantillas de Políticas</h3>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
                     <tr>
-                        <td colspan="4" class="text-center">
-                            <div class="spinner-border text-primary-custom" role="status">
-                                <span class="visually-hidden">Cargando...</span>
-                            </div>
-                        </td>
+                        <th scope="col" class="text-primary-dark">Nombre Plantilla</th>
+                        <th scope="col" class="text-primary-dark">Versión</th>
+                        <th scope="col" class="text-primary-dark">Fecha Publicación</th>
+                        <th scope="col" class="text-primary-dark">Acciones</th>
                     </tr>
-                </tbody>
+                </thead>
+                <tbody id="politicas-tbody">
+                    </tbody>
             </table>
         </div>
     </div>
