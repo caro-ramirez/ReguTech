@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Backoffice - Contenido</title>
+    <title>Backoffice - Gestión de Clientes</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -23,10 +23,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="companies-list.html">Clientes</a> 
+                    <a class="nav-link active" href="companies-list.html">Clientes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="content-management.html">Contenido</a>
+                    <a class="nav-link" href="content-management.html">Contenido</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="platform-stats.html">Estadísticas</a>
@@ -45,23 +45,23 @@
 </nav>
 
 <div class="container py-5">
-    <h1 class="text-center text-dark-blue mb-4">Gestión de Contenido (Plantillas)</h1>
+    <h1 class="text-center text-dark-blue mb-4">Gestión de Clientes (Empresas)</h1>
     <div class="card p-4 shadow-sm border-0 rounded-4">
         <div class="d-flex justify-content-between mb-3">
-            <a href="create-content.html" class="btn btn-primary-custom rounded-pill"><i class="fas fa-plus me-1"></i> Nueva Plantilla</a>
-            <input type="text" class="form-control w-25 rounded-pill" placeholder="Buscar plantilla...">
+            <a href="create-user.html" class="btn btn-primary-custom rounded-pill"><i class="fas fa-plus me-1"></i> Nuevo Cliente</a>
+            <input type="text" class="form-control w-25 rounded-pill" placeholder="Buscar empresa...">
         </div>
         <div class="table-responsive">
             <table class="table table-hover align-middle">
                 <thead>
                     <tr>
-                        <th scope="col" class="text-primary-dark">Nombre Plantilla (Checklist)</th>
-                        <th scope="col" class="text-primary-dark">Versión</th>
-                        <th scope="col" class="text-primary-dark">Fecha Creación</th>
+                        <th scope="col" class="text-primary-dark">Nombre de la Empresa</th>
+                        <th scope="col" class="text-primary-dark">Fecha de Alta</th>
+                        <th scope="col" class="text-primary-dark">N° de Usuarios</th>
                         <th scope="col" class="text-primary-dark">Acciones</th>
                     </tr>
                 </thead>
-                <tbody id="content-tbody">
+                <tbody id="clients-tbody">
                     <tr>
                         <td colspan="4" class="text-center">
                             <div class="spinner-border text-primary-custom" role="status">
@@ -76,6 +76,5 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/content-management.js"></script>
-</body>
+<script src="js/companies-list.js"></script> </body>
 </html>

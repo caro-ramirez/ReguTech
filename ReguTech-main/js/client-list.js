@@ -8,8 +8,15 @@
     const logoutButton = document.getElementById('logout-button');
     const pageTitle = document.getElementById('page-title');
     const usersTbody = document.getElementById('users-tbody');
-
+    
+    // (NUEVO) Elementos del Modal
+    const deleteModalEl = document.getElementById('deleteModal');
+    const deleteModalBody = document.getElementById('deleteModalBody');
+    const confirmDeleteButton = document.getElementById('confirm-delete-button');
+    
     let clienteId = null;
+    let userToDeleteId = null; // (NUEVO) Variable para guardar el ID del usuario a eliminar
+    let deleteModalInstance = null; // (NUEVO) Variable para la instancia del modal
 
     // --- 1. VERIFICACIÓN DE SEGURIDAD Y OBTENCIÓN DE ID ---
     document.addEventListener('DOMContentLoaded', () => {
@@ -18,11 +25,15 @@
             return;
         }
 
-        // Esta página es SOLO para SuperAdmin
         if (userRol !== 'SuperAdmin') {
             alert('No tienes permiso para acceder a esta página.');
             window.location.href = 'dashboard.html';
             return;
+        }
+        
+        // (NUEVO) Inicializar la instancia del modal de Bootstrap
+        if (deleteModalEl) {
+            deleteModalInstance = new bootstrap.Modal(deleteModalEl);
         }
 
         const params = new URLSearchParams(window.location.search);
@@ -34,14 +45,12 @@
             return;
         }
 
-        // Si todo está bien, cargamos los datos
         cargarDatos(clienteId);
     });
 
     // --- 2. LÓGICA DE CARGA DE DATOS (Título y Usuarios) ---
     async function cargarDatos(id) {
         try {
-            // Hacemos dos peticiones a la vez
             const [clienteRes, usuariosRes] = await Promise.all([
                 fetch(`http://localhost:3000/api/backoffice/clientes/${id}`, {
                     method: 'GET',
@@ -64,10 +73,7 @@
             const cliente = await clienteRes.json();
             const usuarios = await usuariosRes.json();
 
-            // Actualizamos el título
             if (pageTitle) pageTitle.textContent = `Usuarios de ${cliente.nombre}`;
-
-            // Renderizamos la tabla
             renderTabla(usuarios);
 
         } catch (err) {
@@ -78,7 +84,7 @@
 
     // --- 3. FUNCIÓN PARA RENDERIZAR LA TABLA ---
     function renderTabla(usuarios) {
-        usersTbody.innerHTML = ''; // Limpiamos el spinner
+        usersTbody.innerHTML = ''; 
 
         if (usuarios.length === 0) {
             usersTbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted">Este cliente no tiene usuarios registrados.</td></tr>`;
@@ -87,6 +93,8 @@
 
         usuarios.forEach(user => {
             const tr = document.createElement('tr');
+            // (NUEVO) Añadimos un ID a la fila para poder borrarla
+            tr.id = `user-row-${user.id_usuario}`; 
             
             const estadoBadge = user.estado_cuenta === 'activo' 
                 ? '<span class="badge bg-success-custom rounded-pill">Activo</span>'
@@ -101,13 +109,19 @@
                     <a href="edit-user.html?id=${user.id_usuario}" class="btn btn-outline-custom btn-sm rounded-pill me-2">
                         <i class="fas fa-edit"></i> Editar
                     </a>
-                    <button type="button" class="btn btn-danger-custom btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                    <button type="button" class="btn btn-danger-custom btn-sm rounded-pill delete-btn" 
+                            data-bs-toggle="modal" data-bs-target="#deleteModal"
+                            data-user-id="${user.id_usuario}"
+                            data-user-name="${user.nombre_completo}">
                         <i class="fas fa-trash-alt"></i> Eliminar
                     </button>
                 </td>
             `;
             usersTbody.appendChild(tr);
         });
+        
+        // (NUEVO) Añadimos los listeners a los botones de eliminar
+        addDeleteListeners();
     }
 
     // --- 4. LÓGICA DE LOGOUT ---
@@ -116,6 +130,82 @@
             e.preventDefault(); 
             localStorage.clear();
             window.location.href = 'index.html'; 
+        });
+    }
+
+    // --- 5. (NUEVO) LÓGICA PARA ELIMINAR USUARIO ---
+    
+    // Función para añadir listeners a los botones "Eliminar" de la tabla
+    function addDeleteListeners() {
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Obtenemos los datos del botón
+                userToDeleteId = button.dataset.userId;
+                const userName = button.dataset.userName;
+                
+                // Actualizamos el texto del modal
+                if (deleteModalBody) {
+                    deleteModalBody.textContent = `¿Estás seguro de que deseas eliminar a ${userName}? Esta acción no se puede deshacer.`;
+                }
+            });
+        });
+    }
+
+    // Listener para el botón de confirmación DENTRO del modal
+    if (confirmDeleteButton) {
+        confirmDeleteButton.addEventListener('click', async () => {
+            if (!userToDeleteId) return;
+
+            // Cambiamos el estado del botón a "cargando"
+            confirmDeleteButton.disabled = true;
+            confirmDeleteButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Eliminando...';
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/backoffice/usuarios/${userToDeleteId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.msg || 'No se pudo eliminar el usuario.');
+                }
+
+                // ¡Éxito!
+                // 1. Cerramos el modal
+                if(deleteModalInstance) deleteModalInstance.hide();
+                
+                // 2. Eliminamos la fila de la tabla
+                const rowToRemove = document.getElementById(`user-row-${userToDeleteId}`);
+                if (rowToRemove) rowToRemove.remove();
+
+            } catch (err) {
+                console.error('Error al eliminar:', err);
+                // Mostramos el error dentro del modal
+                if(deleteModalBody) deleteModalBody.innerHTML = `<div class="alert alert-danger">${err.message}</div>`;
+            } finally {
+                // Restauramos el botón
+                confirmDeleteButton.disabled = false;
+                confirmDeleteButton.innerHTML = 'Eliminar Usuario';
+                userToDeleteId = null; // Limpiamos el ID
+            }
+        });
+    }
+    
+    // (NUEVO) Limpiar el modal cuando se cierra
+    if (deleteModalEl) {
+        deleteModalEl.addEventListener('hidden.bs.modal', () => {
+            if (deleteModalBody) {
+                deleteModalBody.textContent = '¿Estás seguro de que deseas eliminar a este usuario? Esta acción no se puede deshacer.';
+            }
+            if (confirmDeleteButton) {
+                confirmDeleteButton.disabled = false;
+                confirmDeleteButton.innerHTML = 'Eliminar Usuario';
+            }
+            userToDeleteId = null;
         });
     }
 
