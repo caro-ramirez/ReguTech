@@ -39,7 +39,7 @@
                 <a class="btn nav-profile-btn me-2" href="profile.html">
                     <i class="fas fa-user-circle me-1"></i>Mi Perfil
                 </a>
-                <a class="btn nav-logout-btn" href="index.html">
+                <a class="btn nav-logout-btn" id="logout-button" href="#">
                     <i class="fas fa-sign-out-alt me-1"></i>Cerrar Sesión
                 </a>
             </div>
@@ -50,7 +50,7 @@
 <div class="container py-5">
     <h1 class="text-center text-dark-blue mb-4">Crear Nuevo Plan de Auditoría</h1>
     <div class="card shadow-sm p-4">
-        <form>
+        <form id="audit-form">
             <div class="mb-3">
                 <label for="fecha-auditoria" class="form-label">Fecha de Auditoría</label>
                 <input type="date" class="form-control" id="fecha-auditoria" required>
@@ -73,14 +73,19 @@
                 <label for="objetivo-auditoria" class="form-label">Objetivo de la Auditoría</label>
                 <textarea class="form-control" id="objetivo-auditoria" rows="3" placeholder="Describa el objetivo de esta auditoría"></textarea>
             </div>
+            
+            <div class="alert alert-danger mt-3" id="error-message" style="display: none;">
+                </div>
+
             <div class="d-flex justify-content-between mt-4">
                 <a href="audit-list.html" class="btn btn-outline-custom">Cancelar</a>
-                <button type="submit" class="btn btn-primary-custom">Guardar Plan</button>
+                <button type="submit" class="btn btn-primary-custom" id="submit-button">Guardar Plan</button>
             </div>
         </form>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/audit-form.js"></script>
 </body>
 </html>

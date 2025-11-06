@@ -34,9 +34,12 @@ app.use('/api/riesgos', riesgoRoutes);
 const backofficeRoutes = require('./routes/backoffice.js');
 app.use('/api/backoffice', backofficeRoutes);
 
-// --- AÑADIR ESTAS DOS LÍNEAS ---
 const auditoriaRoutes = require('./routes/auditorias.js');
 app.use('/api/auditorias', auditoriaRoutes);
+
+// --- AÑADIR ESTAS DOS LÍNEAS ---
+const planesRoutes = require('./routes/planes.js');
+app.use('/api/planes', planesRoutes);
 // ---------------------------------
 
 // Iniciar el servidor

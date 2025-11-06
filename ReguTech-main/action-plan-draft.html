@@ -10,7 +10,6 @@
 </head>
 <body>
 
-
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom shadow-sm">
     <div class="container py-2">
         <a class="navbar-brand d-flex align-items-center" href="./dashboard.html">
@@ -39,7 +38,7 @@
                 <a class="btn nav-profile-btn me-2" href="profile.html">
                     <i class="fas fa-user-circle me-1"></i>Mi Perfil
                 </a>
-                <a class="btn nav-logout-btn" href="index.html">
+                <a class="btn nav-logout-btn" id="logout-button" href="#">
                     <i class="fas fa-sign-out-alt me-1"></i>Cerrar Sesión
                 </a>
             </div>
@@ -48,44 +47,60 @@
 </nav>
 
 <div class="container py-5">
-    <h1 class="text-center text-dark-blue mb-4">Borrador de Plan de Acción</h1>
+    <h1 class="text-center text-dark-blue mb-4">Crear Plan de Acción</h1>
     <div class="card shadow-sm p-4 mb-4">
-        <h2 class="card-title text-center text-primary-custom mb-4">Plan de Acción para "Operaciones de Clientes"</h2>
-        <p class="text-muted text-center mb-4">Este borrador ha sido generado automáticamente en base a los hallazgos recientes.</p>
+        
+        <form id="action-plan-form">
+            
+            <input type="hidden" id="hallazgo-id-input">
 
-        <h4 class="text-primary-dark">Acción 1: Revisión de procedimientos de alta de clientes</h4>
-        <ul>
-            <li>**Descripción:** Actualizar y simplificar los procedimientos de alta de nuevos clientes para asegurar la correcta recopilación de documentación y verificación de identidad.</li>
-            <li>**Responsable:** Jefe de Operaciones</li>
-            <li>**Fecha Límite:** 2025-10-15</li>
-            <li>**Estado:** Pendiente</li>
-        </ul>
-        <hr>
+            <div class="mb-3">
+                <label class="form-label fw-bold">Hallazgo a Solucionar</label>
+                <textarea class="form-control" id="hallazgo-descripcion" rows="3" readonly disabled></textarea>
+                <small class="form-text text-muted">Este es el hallazgo que se está tratando.</small>
+            </div>
 
-        <h4 class="text-primary-dark mt-4">Acción 2: Capacitación en normativas AML/CFT para personal de primera línea</h4>
-        <ul>
-            <li>**Descripción:** Implementar un programa de capacitación obligatorio para todo el personal que interactúa directamente con clientes, enfocado en prevención de lavado de activos y financiación del terrorismo.</li>
-            <li>**Responsable:** Gerente de RRHH / Compliance Officer</li>
-            <li>**Fecha Límite:** 2025-11-30</li>
-            <li>**Estado:** Pendiente</li>
-        </ul>
-        <hr>
+            <hr>
 
-        <h4 class="text-primary-dark mt-4">Acción 3: Implementación de sistema de monitoreo de transacciones sospechosas</h4>
-        <ul>
-            <li>**Descripción:** Evaluar y adquirir una herramienta tecnológica para el monitoreo automático de transacciones que puedan indicar actividades sospechosas, integrándola con los sistemas existentes.</li>
-            <li>**Responsable:** CTO / Jefe de Seguridad de la Información</li>
-            <li>**Fecha Límite:** 2026-01-30</li>
-            <li>**Estado:** Pendiente</li>
-        </ul>
+            <div class="row g-3">
+                <div class="col-md-6 mb-3">
+                    <label for="area-afectada" class="form-label">Área Afectada</label>
+                    <input type="text" class="form-control" id="area-afectada" placeholder="Ej: Operaciones" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="responsable-asignado" class="form-label">Responsable Asignado</label>
+                    <input type="text" class="form-control" id="responsable-asignado" placeholder="Ej: Jefe de Operaciones" required>
+                </div>
+            </div>
 
-        <div class="mt-5 text-center">
-            <button class="btn btn-primary-custom btn-lg"><i class="fas fa-save me-2"></i> Guardar y Aprobar Plan</button>
-            <a href="dashboard.html" class="btn btn-outline-custom btn-lg ms-3">Volver al Dashboard</a>
-        </div>
+            <div class="mb-3">
+                <label for="accion-propuesta" class="form-label">Acción Propuesta</label>
+                <textarea class="form-control" id="accion-propuesta" rows="3" placeholder="Describa la acción correctiva" required></textarea>
+            </div>
+            
+            <div class="mb-3">
+                <label for="fecha-limite" class="form-label">Fecha Límite</label>
+                <input type="date" class="form-control" id="fecha-limite" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="descripcion-detallada" class="form-label">Descripción Detallada (Opcional)</label>
+                <textarea class="form-control" id="descripcion-detallada" rows="5" placeholder="Agregue detalles adicionales, pasos a seguir, etc."></textarea>
+            </div>
+
+            <div class="alert alert-danger mt-3" id="error-message" style="display: none;">
+                </div>
+
+            <div class="mt-4 text-center">
+                <a href="audit-list.html" class="btn btn-outline-custom btn-lg ms-3">Cancelar</a>
+                <button type="submit" class="btn btn-primary-custom btn-lg" id="submit-button">
+                    <i class="fas fa-save me-2"></i> Guardar Plan de Acción
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+<script src="js/action-plan-draft.js"></script> </body>
 </html>

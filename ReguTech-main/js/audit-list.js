@@ -89,10 +89,14 @@
                 filaHTML += `<td>${plan.nombre_cliente || 'N/A'}</td>`;
             }
 
+            // --- CAMBIO: AHORA HAY DOS BOTONES ---
             filaHTML += `
-                <td>
-                    <a href="audit-findings-form.html?id=${plan.id_plan_auditoria}" class="btn btn-primary-custom btn-sm">
-                        <i class="fas fa-plus me-1"></i> Registrar Hallazgos
+                <td class="text-nowrap">
+                    <a href="hallazgos-detalle.html?id=${plan.id_plan_auditoria}" class="btn btn-outline-custom btn-sm" title="Ver Hallazgos">
+                        <i class="fas fa-eye"></i> Ver
+                    </a>
+                    <a href="audit-findings-form.html?id=${plan.id_plan_auditoria}" class="btn btn-primary-custom btn-sm ms-2" title="Agregar Hallazgo">
+                        <i class="fas fa-plus"></i> Agregar
                     </a>
                 </td>
             `;

@@ -1,11 +1,11 @@
-// js/audit-form.js
+// js/create-user.js
 
 (function() {
     const token = localStorage.getItem('token');
     const userRol = localStorage.getItem('user_rol');
     
     // Elementos del DOM
-    const auditForm = document.getElementById('audit-form');
+    const createClientForm = document.getElementById('create-client-form');
     const submitButton = document.getElementById('submit-button');
     const logoutButton = document.getElementById('logout-button');
     const errorMessage = document.getElementById('error-message');
@@ -18,9 +18,9 @@
             return;
         }
 
-        // Solo Admins y SuperAdmins pueden crear auditorías
-        if (userRol !== 'Administrador' && userRol !== 'SuperAdmin') {
-            console.warn('Acceso denegado. Se requiere rol de Admin.');
+        // Esta página es SOLO para SuperAdmin
+        if (userRol !== 'SuperAdmin') {
+            console.warn('Acceso denegado. Se requiere rol de SuperAdmin.');
             alert('No tienes permiso para acceder a esta página.');
             window.location.href = 'dashboard.html';
             return;
@@ -30,58 +30,58 @@
     // --- 2. LÓGICA DE EVENTOS (SUBMIT Y LOGOUT) ---
 
     // Enviar Formulario
-    if (auditForm) {
-        auditForm.addEventListener('submit', async (e) => {
+    if (createClientForm) {
+        createClientForm.addEventListener('submit', async (e) => {
             e.preventDefault(); 
             
             submitButton.disabled = true;
-            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Guardando...';
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Creando...';
             hideError();
 
             // 1. Recolectar los datos del formulario
-            const fecha_planificada = document.getElementById('fecha-auditoria').value;
-            const area_auditar = document.getElementById('area-auditar').value;
-            const responsable_auditoria = document.getElementById('responsable-auditoria').value;
-            const objetivo = document.getElementById('objetivo-auditoria').value; // El nuevo campo
+            const clientName = document.getElementById('clientName').value;
+            const userName = document.getElementById('adminName').value; // El backend espera 'userName'
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value; // El nuevo campo
 
             // Validación simple
-            if (!fecha_planificada || !area_auditar || !responsable_auditoria) {
-                showError('Los campos Fecha, Área y Responsable son obligatorios.');
+            if (!clientName || !userName || !email || !password) {
+                showError('Todos los campos son obligatorios.');
                 submitButton.disabled = false;
-                submitButton.textContent = 'Guardar Plan';
+                submitButton.textContent = 'Crear Cliente';
                 return;
             }
             
             try {
-                // 2. Enviar datos a la API (POST /api/auditorias)
-                const response = await fetch('http://localhost:3000/api/auditorias', {
+                // 2. Enviar datos a la API (POST /api/create-admin-user)
+                const response = await fetch('http://localhost:3000/api/create-admin-user', {
                     method: 'POST',
                     headers: {
-                        'Authorization': `Bearer ${token}`,
+                        'Authorization': `Bearer ${token}`, // El token de SuperAdmin
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        fecha_planificada,
-                        area_auditar,
-                        responsable_auditoria,
-                        objetivo // Enviamos el nuevo campo
+                        clientName,
+                        userName,
+                        email,
+                        password
                     })
                 });
 
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error(errorData.msg || 'No se pudo guardar el plan de auditoría.');
+                    throw new Error(errorData.message || 'No se pudo crear el cliente.');
                 }
 
-                // 3. ¡Éxito! Redirigir a la lista
-                alert('¡Plan de auditoría guardado con éxito!');
-                window.location.href = 'audit-list.html'; 
+                // 3. ¡Éxito! Redirigir a la lista de clientes
+                alert('¡Cliente y Administrador creados con éxito!');
+                window.location.href = 'clients-list.html'; 
 
             } catch (err) {
-                console.error('Error al guardar:', err);
+                console.error('Error al crear cliente:', err);
                 showError(err.message);
                 submitButton.disabled = false;
-                submitButton.textContent = 'Guardar Plan';
+                submitButton.textContent = 'Crear Cliente';
             }
         });
     }

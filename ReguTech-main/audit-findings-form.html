@@ -39,7 +39,7 @@
                 <a class="btn nav-profile-btn me-2" href="profile.html">
                     <i class="fas fa-user-circle me-1"></i>Mi Perfil
                 </a>
-                <a class="btn nav-logout-btn" href="index.html">
+                <a class="btn nav-logout-btn" id="logout-button" href="#">
                     <i class="fas fa-sign-out-alt me-1"></i>Cerrar Sesión
                 </a>
             </div>
@@ -50,8 +50,12 @@
 <div class="container py-5">
     <h1 class="text-center text-dark-blue mb-4">Registrar Hallazgos de Auditoría</h1>
     <div class="card shadow-sm p-4">
-        <h2 class="card-title text-center text-primary-custom mb-4">Auditoría: Procesos de Captación de Clientes (2025-08-10)</h2>
-        <form>
+        
+        <h2 class="card-title text-center text-primary-custom mb-4" id="audit-title">
+            Cargando auditoría...
+        </h2>
+        
+        <form id="findings-form">
             <div class="mb-3">
                 <label for="tipo-hallazgo" class="form-label">Tipo de Hallazgo</label>
                 <select class="form-select" id="tipo-hallazgo" required>
@@ -64,24 +68,31 @@
             </div>
             <div class="mb-3">
                 <label for="descripcion-hallazgo" class="form-label">Descripción Detallada</label>
-                <textarea class="form-control" id="descripcion-hallazgo" rows="4" placeholder="Describa el hallazgo encontrado"></textarea>
+                <textarea class="form-control" id="descripcion-hallazgo" rows="4" placeholder="Describa el hallazgo encontrado" required></textarea>
             </div>
             <div class="mb-3">
                 <label for="evidencia" class="form-label">Evidencia (opcional)</label>
-                <input type="file" class="form-control" id="evidencia">
+                <input type="file" class="form-control" id="evidencia" disabled>
+                <small class="form-text text-muted">La carga de archivos no está implementada en esta versión.</small>
             </div>
             <div class="mb-3">
                 <label for="area-responsable" class="form-label">Área Responsable</label>
-                <input type="text" class="form-control" id="area-responsable" placeholder="Departamento o área involucrada">
+                <input type="text" class="form-control" id="area-responsable" placeholder="Se asignará en el Plan de Acción" disabled>
+                <small class="form-text text-muted">El área se define en el Plan de Mejora, no en el hallazgo.</small>
             </div>
+            
+            <div class="alert alert-danger mt-3" id="error-message" style="display: none;">
+                </div>
+
             <div class="d-flex justify-content-between mt-4">
                 <a href="audit-list.html" class="btn btn-outline-custom">Cancelar</a>
-                <button type="submit" class="btn btn-primary-custom">Guardar Hallazgo</button>
+                <button type="submit" class="btn btn-primary-custom" id="submit-button">Guardar Hallazgo</button>
             </div>
         </form>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/audit-findings-form.js"></script>
 </body>
 </html>

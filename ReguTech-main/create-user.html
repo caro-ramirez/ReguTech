@@ -36,7 +36,7 @@
                 <a class="btn nav-profile-btn me-2" href="profile.html">
                     <i class="fas fa-user-circle me-1"></i>Mi Perfil
                 </a>
-                <a class="btn nav-logout-btn" href="index.html">
+                <a class="btn nav-logout-btn" id="logout-button" href="#">
                     <i class="fas fa-sign-out-alt me-1"></i>Cerrar Sesión
                 </a>
             </div>
@@ -47,38 +47,50 @@
 <div class="container py-5">
     <h1 class="text-center text-dark-blue mb-4">Crear Nuevo Cliente</h1>
     <div class="card p-4 shadow-sm border-0 rounded-4 mx-auto" style="max-width: 600px;">
-        <form>
+        
+        <form id="create-client-form">
             <h5 class="text-dark-blue mb-3">Datos de la Empresa</h5>
             <div class="mb-3">
                 <label for="clientName" class="form-label">Nombre de la Empresa</label>
-                <input type="text" class="form-control rounded-pill" id="clientName">
+                <input type="text" class="form-control rounded-pill" id="clientName" required>
             </div>
             <div class="mb-3">
                 <label for="plan" class="form-label">Plan de Suscripción</label>
-                <select class="form-select rounded-pill" id="plan">
-                    <option selected>Seleccionar...</option>
-                    <option value="esencial">Esencial</option>
-                    <option value="profesional">Profesional</option>
-                </select>
+                <select class="form-select rounded-pill" id="plan" disabled>
+                    <option selected>Esencial</option>
+                    </select>
+                <small class="form-text text-muted">La selección de plan se habilitará en futuras versiones.</small>
             </div>
+            
             <hr>
+            
             <h5 class="text-dark-blue mb-3">Usuario Administrador Inicial</h5>
             <div class="mb-3">
                 <label for="adminName" class="form-label">Nombre del Administrador</label>
-                <input type="text" class="form-control rounded-pill" id="adminName">
+                <input type="text" class="form-control rounded-pill" id="adminName" required>
             </div>
             <div class="mb-3">
                 <label for="adminEmail" class="form-label">Email del Administrador</label>
-                <input type="email" class="form-control rounded-pill" id="adminEmail">
+                <input type="email" class="form-control rounded-pill" id="adminEmail" required>
             </div>
+            
+            <div class="mb-3">
+                <label for="adminPassword" class="form-label">Contraseña Inicial</label>
+                <input type="password" class="form-control rounded-pill" id="adminPassword" required>
+            </div>
+            
+            <div class="alert alert-danger mt-3" id="error-message" style="display: none;">
+                </div>
+
             <div class="d-flex justify-content-end mt-4">
                 <a href="clients-list.html" class="btn btn-secondary-custom rounded-pill me-2">Cancelar</a>
-                <button type="submit" class="btn btn-primary-custom rounded-pill">Crear Cliente</button>
+                <button type="submit" class="btn btn-primary-custom rounded-pill" id="submit-button">Crear Cliente</button>
             </div>
         </form>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/create-user.js"></script>
 </body>
 </html>
